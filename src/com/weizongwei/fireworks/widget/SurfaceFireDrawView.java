@@ -79,9 +79,13 @@ public class SurfaceFireDrawView extends View  implements SurfaceHolder.Callback
 
 
         if(paintView!=null) {
+
             colorList = ViewPickColorsUtil.radomPickColors(paintView);
             // 创建画笔
             Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            //设置锯齿效果
+
             try {
                 for (Integer int_col : colorList) {
                     Log.d("XXXXX", "col:" + int_col);
@@ -98,7 +102,7 @@ public class SurfaceFireDrawView extends View  implements SurfaceHolder.Callback
                             paint
                     );
                     //本身是不需要在ui线程睡眠的  不过为了防止radom传入的时间戳种子都相同了 所以先沉睡一ms
-                    Thread.sleep(2);
+                    //Thread.sleep(2);
 
 
                 }
@@ -125,6 +129,7 @@ public class SurfaceFireDrawView extends View  implements SurfaceHolder.Callback
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
 
     }
+
 
 
     /*自定义线程*/

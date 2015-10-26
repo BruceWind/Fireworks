@@ -46,6 +46,7 @@ public class ViewPickColorsUtil {
                     arrayList.add(radomcol);
                 }
             }
+
             bitmap.recycle();
 
         }
@@ -115,7 +116,7 @@ public class ViewPickColorsUtil {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        Random random = new Random(System.currentTimeMillis());
+        Random random = new Random();
         return random.nextInt(i_max) ;
     }
 

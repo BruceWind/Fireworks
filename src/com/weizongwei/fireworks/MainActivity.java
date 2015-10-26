@@ -24,8 +24,6 @@ public class MainActivity extends Activity {
 
     SurfaceFireDrawView surface_main;
     TextView txt_main;
-    ArrayList<Integer> arrayList;
-
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
@@ -44,7 +42,7 @@ public class MainActivity extends Activity {
 
     private  void initWidget()
     {
-        surface_main=(SurfaceFireDrawView)findViewById(R.id.sur_draw);
+        surface_main=SurfaceFireDrawView.add2RootView(this);
         txt_main=(TextView)findViewById(R.id.txt_main);
     }
 
@@ -53,8 +51,6 @@ public class MainActivity extends Activity {
         surface_main.setPaintView(txt_main);
 
         surface_main.invalidate();
-
-
 
     }
 
