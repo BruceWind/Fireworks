@@ -9,12 +9,13 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.BounceInterpolator;
+import com.weizongwei.fireworks.utils.ViewPickColorsUtil;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -22,36 +23,39 @@ import java.util.Random;
  */
 public class BangView extends View {
 
-    public static final int RADIUS = (int) (5 * Resources.getSystem().getDisplayMetrics().density + 0.5f);
+    public static final int RADIUS = (int) (4 * Resources.getSystem().getDisplayMetrics().density + 0.5f);
 
-    private Point currentPoint;
+    ArrayList<Integer> radomPickColors;
+    private Point[] pointList;
 
     private int upHeight = (int) (80 * Resources.getSystem().getDisplayMetrics().density + 0.5f);
 
     private Paint mPaint;
     private View paintView;
-    private int top, height, left, width, xcener, ycenter, bottom;
+
+    //如下几个值用于 计算颗粒的 起始，顶部，落点位置
+    private int top, height, left, width, xcenter, ycenter, right, bottom;
 
     public BangView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(Color.BLUE);
+        init();
     }
 
     public BangView(Activity activity) {
         super(activity);
+        init();
+    }
+
+    private void init() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setColor(Color.BLUE);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        if (currentPoint == null) {
-            currentPoint = new Point(left, top);
-            drawCircle(canvas);
+        if (pointList != null) {
+            drawCircleList(canvas);
             //startAnimation();
-        } else {
-            drawCircle(canvas);
         }
     }
 
@@ -59,20 +63,30 @@ public class BangView extends View {
     public void setPaintView(View v) {
         paintView = v;
         top = v.getTop();
-        height = v.getBottom() - top;
         left = v.getLeft();
+
+        height = v.getBottom() - top;
         width = v.getRight() - left;
 
-        xcener = left + width / 2;
+        xcenter = left + width / 2;
         ycenter = top + height / 2;
 
         bottom = v.getBottom();
+        right = v.getRight();
+
+        int len=width/RADIUS;
+        radomPickColors=ViewPickColorsUtil.radomPickColors(paintView,len+1);
     }
 
-    private void drawCircle(Canvas canvas) {
-        float x = currentPoint.getX();
-        float y = currentPoint.getY();
-        canvas.drawCircle(x, y, RADIUS, mPaint);
+
+    private void drawCircleList(Canvas canvas) {
+        if(pointList!=null) {
+            for (Point point : pointList) {
+                mPaint.setColor(point.getColor());
+                canvas.drawCircle(point.getX(), point.getY(), RADIUS, mPaint);
+            }
+            Log.d("drawCircleList", "pointList size:"+pointList.length);
+        }
     }
 
     private void shake() {
@@ -83,15 +97,16 @@ public class BangView extends View {
 
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                paintView.setTranslationX((random.nextFloat() - 0.5f) * paintView.getWidth() * 0.05f);
-                paintView.setTranslationY((random.nextFloat() - 0.5f) * paintView.getHeight() * 0.05f);
+                paintView.setTranslationX((random.nextFloat() - 0.5f) * paintView.getWidth() * 0.1f);
+                paintView.setTranslationY((random.nextFloat() - 0.5f) * paintView.getHeight() * 0.1f);
 
             }
         });
         animator.start();
 
 
-        paintView.animate().setListener(new Animator.AnimatorListener() {
+        paintView.animate()
+                .setListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animator) {
 
@@ -99,9 +114,16 @@ public class BangView extends View {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-
-                createPoint(left + RADIUS, ycenter);
-
+                int len=width/RADIUS;
+                pointList=new Point[len];
+                for (int i_index = 0; i_index <len; i_index ++) {
+                    int color=Color.RED;
+                    if(radomPickColors!=null&&radomPickColors.size()>i_index)
+                    {
+                        color=radomPickColors.get(i_index);
+                    }
+                    createPoint(left+RADIUS*i_index, ycenter, color,i_index);
+                }
             }
 
             @Override
@@ -113,9 +135,9 @@ public class BangView extends View {
             public void onAnimationRepeat(Animator animator) {
 
             }
-        }).
-                setDuration(350).
-                setStartDelay(100)
+        })
+                .setDuration(350)
+                .setStartDelay(100)
                 .scaleX(0f).scaleY(0f)
                 .alpha(0f).start();
     }
@@ -127,43 +149,49 @@ public class BangView extends View {
 
     }
 
-    private void createPoint(int x, int y) {
+    private void createPoint(int x, int y, int col,final int index) {
         //Point startPoint = new Point(left + RADIUS, ycenter);
         //Point endPoint = new Point(left + RADIUS, top - RADIUS - upHeight);
 
-        Point startPoint = new Point(x, y);
+        Point beginPoint = new Point(x, y, col);
+        pointList[index]=beginPoint;
+        Log.d("XXXX start", " x:" + x + " y:" + y);
         ValueAnimator anim = ValueAnimator.ofObject(
                 new PointEvaluator(),
-                startPoint,
-                getTopPoint(startPoint),
-                getEndPoint(startPoint)
+                beginPoint,
+                getTopPoint(beginPoint),
+                getEndPoint(beginPoint)
         );
 
         anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                currentPoint = (Point) animation.getAnimatedValue();
+                pointList[index] = (Point) animation.getAnimatedValue();
+                mPaint.setColor(pointList[index].getColor());
                 invalidate();
             }
         });
         anim.setInterpolator(new DecelerateAccelerateInterpolator());
-        anim.setDuration(500);
+        anim.setDuration(600 + ViewPickColorsUtil.getRadomInt(200));//时间后面要追加随机数
         anim.start();
+
     }
 
 
     private Point getTopPoint(Point p) {
-        float x = p.getX() + (p.getX() - xcener);
-        float y = p.getY() - upHeight;
+        float x = p.getX() + (p.getX() - xcenter);
+        float y = p.getY() - upHeight - ViewPickColorsUtil.getRadomInt(60);//跑到顶部的位置的高度 要有个随机数
 
-        return new Point(x, y);
+        Log.d("XXXX top", " x:" + x + " y:" + y);
+        return new Point(x, y, p.getColor());
     }
 
     private Point getEndPoint(Point p) {
-        float x = p.getX() + 2 * (p.getX() - xcener);
+        float x = p.getX() + 2 * (p.getX() - xcenter);
         float y = bottom;
 
-        return new Point(x, y);
+        Log.d("XXXX end", " x:" + x + " y:" + y);
+        return new Point(x, y, p.getColor());
     }
 
     public static BangView add2RootView(Activity activity) {

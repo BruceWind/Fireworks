@@ -26,7 +26,7 @@ public class ViewPickColorsUtil {
      * @param view
      * @return
      */
-    public static ArrayList<Integer> radomPickColors(View view) {
+    public static ArrayList<Integer> radomPickColors(View view,int colorsCount) {
         ArrayList<Integer> arrayList=new ArrayList<>();
 
         if (view != null && view.getVisibility() == View.VISIBLE) {
@@ -34,8 +34,8 @@ public class ViewPickColorsUtil {
             Bitmap bitmap=getViewCacheBitmap(view);
             saveBitmap2SdCard("BBBBBBB",bitmap);
             Log.d("XXXXX","bitmap bytecount = "+ bitmap.getByteCount()+" width = "+bitmap.getWidth()+"  height = "+bitmap.getHeight());
-            if (view.getWidth() * view.getHeight() > 8) {
-                for (int i_index = 0; i_index < 8; i_index++) {
+            if (view.getWidth() * view.getHeight() > colorsCount) {
+                for (int i_index = 0; i_index < colorsCount; i_index++) {
 
 
                     int radomcol=getPositionColor(bitmap,

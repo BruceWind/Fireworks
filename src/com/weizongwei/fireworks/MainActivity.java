@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.weizongwei.fireworks.widget.BangView;
 
@@ -13,7 +14,7 @@ public class MainActivity extends Activity {
      */
 
     BangView surface_main;
-    TextView txt_main;
+    ImageView txt_main;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
@@ -32,7 +33,7 @@ public class MainActivity extends Activity {
 
     private  void initWidget()
     {
-        txt_main=(TextView)findViewById(R.id.txt_main);
+        txt_main=(ImageView)findViewById(R.id.txt_main);
     }
 
     private void startDraw()

@@ -9,9 +9,12 @@ public class Point {
 
     private float y;
 
-    public Point(float x, float y) {
+    private int color;
+
+    public Point(float x, float y,int color) {
         this.x = x;
         this.y = y;
+        this.color=color;
     }
 
     public float getX() {
@@ -22,4 +25,7 @@ public class Point {
         return y;
     }
 
+    public int getColor() {
+        return color;
+    }
 }
