@@ -2,41 +2,46 @@ package com.weizongwei.fireworks.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.*;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
-import com.weizongwei.fireworks.R;
 import com.weizongwei.fireworks.utils.ViewPickColorsUtil;
 
 import java.util.ArrayList;
 
 /**
  * Created by weizongwei on 15-10-24.
+ *
+ * 自带烟花效果的view
  */
-public class SurfaceFireDrawView extends View {
+public class FireWorksView extends View {
 
 
+    public static final float RADIUS = (int)(5* Resources.getSystem().getDisplayMetrics().density+0.5f);
 
     private View paintView;
     private int top,height,left,width;
 
     ArrayList<Integer> colorList;
 
-    public SurfaceFireDrawView(Context context) {
+    public FireWorksView(Context context) {
         super(context);
         init();
     }
 
-    public SurfaceFireDrawView(Context context, AttributeSet attrs) {
+    public FireWorksView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public SurfaceFireDrawView(Context context, AttributeSet attrs, int defStyle) {
+    public FireWorksView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
+
+
 
     public  void setPaintView(View v)
     {
@@ -48,10 +53,10 @@ public class SurfaceFireDrawView extends View {
     }
 
 
-    public static SurfaceFireDrawView add2RootView(Activity activity) {
+    public static FireWorksView add2RootView(Activity activity) {
 
         ViewGroup rootView = (ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT);
-        SurfaceFireDrawView surfview = new SurfaceFireDrawView(activity);
+        FireWorksView surfview = new FireWorksView(activity);
 
         rootView.addView(
                 surfview,
@@ -66,7 +71,7 @@ public class SurfaceFireDrawView extends View {
 
     private  void init()
     {
-        //setBackgroundColor(0xFFFFFFFF);
+
 
     }
 
@@ -96,12 +101,9 @@ public class SurfaceFireDrawView extends View {
                     canvas.drawCircle(
                             l,
                             b,
-                            15,//radius
+                            RADIUS,//radius
                             paint
                     );
-                    //本身是不需要在ui线程睡眠的  不过为了防止radom传入的时间戳种子都相同了 所以先沉睡一ms
-                    //Thread.sleep(2);
-
 
                 }
             } catch (Exception ex) {

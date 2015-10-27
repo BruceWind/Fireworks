@@ -2,27 +2,17 @@ package com.weizongwei.fireworks;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.view.Window;
 import android.widget.TextView;
-import com.weizongwei.fireworks.utils.ViewPickColorsUtil;
-import com.weizongwei.fireworks.widget.SurfaceFireDrawView;
-
-import java.util.ArrayList;
+import com.weizongwei.fireworks.widget.BangView;
 
 public class MainActivity extends Activity {
     /**
      * Called when the activity is first created.
      */
 
-    SurfaceFireDrawView surface_main;
+    BangView surface_main;
     TextView txt_main;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -47,10 +37,10 @@ public class MainActivity extends Activity {
 
     private void startDraw()
     {
-        surface_main=SurfaceFireDrawView.add2RootView(this);
+        surface_main= BangView.add2RootView(this);
         surface_main.setPaintView(txt_main);
-
-        surface_main.invalidate();
+        surface_main.startAnimation();
+        //surface_main.invalidate();
 
     }
 
