@@ -37,17 +37,17 @@ public class MainActivity extends Activity {
             public void run() {
                 startDraw();
             }
-        }, 1600);
+        }, 2600);
     }
 
     private  void initWidget()
     {
-        surface_main=SurfaceFireDrawView.add2RootView(this);
         txt_main=(TextView)findViewById(R.id.txt_main);
     }
 
     private void startDraw()
     {
+        surface_main=SurfaceFireDrawView.add2RootView(this);
         surface_main.setPaintView(txt_main);
 
         surface_main.invalidate();

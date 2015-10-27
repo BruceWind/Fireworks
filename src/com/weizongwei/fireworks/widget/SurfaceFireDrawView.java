@@ -6,6 +6,7 @@ import android.graphics.*;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.*;
+import com.weizongwei.fireworks.R;
 import com.weizongwei.fireworks.utils.ViewPickColorsUtil;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 /**
  * Created by weizongwei on 15-10-24.
  */
-public class SurfaceFireDrawView extends View  implements SurfaceHolder.Callback{
+public class SurfaceFireDrawView extends View {
 
 
 
@@ -24,17 +25,17 @@ public class SurfaceFireDrawView extends View  implements SurfaceHolder.Callback
 
     public SurfaceFireDrawView(Context context) {
         super(context);
-        //init();
+        init();
     }
 
     public SurfaceFireDrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        //init();
+        init();
     }
 
     public SurfaceFireDrawView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        //init();
+        init();
     }
 
     public  void setPaintView(View v)
@@ -63,19 +64,16 @@ public class SurfaceFireDrawView extends View  implements SurfaceHolder.Callback
         return surfview;
     }
 
-/*    private  void init()
+    private  void init()
     {
-        holder = this.getHolder();
-        holder.addCallback(this);
-        holder.setFormat(PixelFormat.TRANSPARENT);  //顶层绘制SurfaceView设成透明
-        this.setZOrderOnTop(true);
+        //setBackgroundColor(0xFFFFFFFF);
 
-    }*/
+    }
 
     protected void onDraw(Canvas canvas) {
 
         super.onDraw(canvas);
-        canvas.drawColor(Color.WHITE, PorterDuff.Mode.CLEAR);
+        canvas.drawColor(Color.TRANSPARENT);
 
 
         if(paintView!=null) {
@@ -114,22 +112,6 @@ public class SurfaceFireDrawView extends View  implements SurfaceHolder.Callback
         }
 
     }
-
-        @Override
-    public void surfaceCreated(SurfaceHolder surfaceHolder) {
-
-    }
-
-    @Override
-    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
-    }
-
-    @Override
-    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
-    }
-
 
 
     /*自定义线程*/

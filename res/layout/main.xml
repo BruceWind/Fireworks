@@ -15,11 +15,6 @@
             android:text="123"
             />
 
-    <com.weizongwei.fireworks.widget.SurfaceFireDrawView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/sur_draw"
-            />
 
 
 
