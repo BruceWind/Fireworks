@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
             public void run() {
                 startDraw();
             }
-        }, 2600);
+        }, 1600);
     }
 
     private  void initWidget()
@@ -39,8 +39,8 @@ public class MainActivity extends Activity {
     {
         surface_main= BangView.add2RootView(this);
         surface_main.setPaintView(txt_main);
+        surface_main.invalidate();
         surface_main.startAnimation();
-        //surface_main.invalidate();
 
     }
 
