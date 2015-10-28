@@ -186,8 +186,8 @@ public class BangView extends View {
         float x = p.getX() + (p.getX() - xcenter);
         float y = p.getY() - upHeight;//跑到顶部的位置的高度 要有个随机数
 
-        x+= ViewPickColorsUtil.getRadomInt(50);
-        y+= ViewPickColorsUtil.getRadomInt(60);
+        x+= ViewPickColorsUtil.getRadomInt(width/5);
+        y+= ViewPickColorsUtil.getRadomInt(height/4);
 
         Log.d("XXXX top", " x:" + x + " y:" + y);
         return new Point(x, y, p.getColor());
@@ -198,8 +198,8 @@ public class BangView extends View {
         float y = bottom;
 
 
-        x+= ViewPickColorsUtil.getRadomInt(50);
-        y+= ViewPickColorsUtil.getRadomInt(60);
+        x+= ViewPickColorsUtil.getRadomInt(width/5);
+        y+= ViewPickColorsUtil.getRadomInt(height/5);
 
 
         Log.d("XXXX end", " x:" + x + " y:" + y);
