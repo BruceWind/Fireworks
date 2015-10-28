@@ -56,7 +56,6 @@ public class BangView extends View {
     protected void onDraw(Canvas canvas) {
         if (pointList != null) {
             drawCircleList(canvas);
-            //startAnimation();
         }
     }
 
@@ -75,7 +74,7 @@ public class BangView extends View {
         bottom = v.getBottom();
         right = v.getRight();
 
-        int len=width/RADIUS/2;
+        int len=width/RADIUS/2*2;// 先/2，是根据颗粒的直径得出颗粒总数 ； 总数×2，是为了增加颗粒数。
         Log.d("XXXxxx","width:"+width+"  radius:"+RADIUS+" left:"+left);
         radomPickColors=ViewPickColorsUtil.radomPickColors(paintView,len+1);
     }
@@ -115,16 +114,7 @@ public class BangView extends View {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                int len=width/RADIUS/2;
-                pointList=new Point[len];
-                for (int i_index = 0; i_index <len; i_index ++) {
-                    int color=Color.RED;
-                    if(radomPickColors!=null&&radomPickColors.size()>i_index)
-                    {
-                        color=radomPickColors.get(i_index);
-                    }
-                    createPoint(left+RADIUS*i_index*2, ycenter, color,i_index);
-                }
+                creatPointList();
             }
 
             @Override
@@ -138,16 +128,29 @@ public class BangView extends View {
             }
         })
                 .setDuration(350)
-                .setStartDelay(100)
+                .setStartDelay(10)
                 .scaleX(0f).scaleY(0f)
                 .alpha(0f).start();
     }
 
     public void startAnimation() {
-
         shake();
+    }
 
-
+    private void creatPointList()
+    {
+        int len=width/RADIUS/2*2;
+        //len的结果  先/2，是根据颗粒的直径得出颗粒总数； 总数×2，是为了增加颗粒数。
+        pointList=new Point[len];
+        int xbegin=left+width/4;//一堆颗粒的最左边 和最右边都应该预留1/4的区域
+        for (int i_index = 0; i_index <len; i_index ++) {
+            int color=Color.RED;
+            if(radomPickColors!=null&&radomPickColors.size()>i_index)
+            {
+                color=radomPickColors.get(i_index);
+            }
+            createPoint(xbegin+RADIUS*i_index/2, ycenter, color,i_index);
+        }
     }
 
     private void createPoint(int x, int y, int col,final int index) {
@@ -181,7 +184,10 @@ public class BangView extends View {
 
     private Point getTopPoint(Point p) {
         float x = p.getX() + (p.getX() - xcenter);
-        float y = p.getY() - upHeight - ViewPickColorsUtil.getRadomInt(60);//跑到顶部的位置的高度 要有个随机数
+        float y = p.getY() - upHeight;//跑到顶部的位置的高度 要有个随机数
+
+        x+= ViewPickColorsUtil.getRadomInt(50);
+        y+= ViewPickColorsUtil.getRadomInt(60);
 
         Log.d("XXXX top", " x:" + x + " y:" + y);
         return new Point(x, y, p.getColor());
@@ -190,6 +196,11 @@ public class BangView extends View {
     private Point getEndPoint(Point p) {
         float x = p.getX() + 2 * (p.getX() - xcenter);
         float y = bottom;
+
+
+        x+= ViewPickColorsUtil.getRadomInt(50);
+        y+= ViewPickColorsUtil.getRadomInt(60);
+
 
         Log.d("XXXX end", " x:" + x + " y:" + y);
         return new Point(x, y, p.getColor());
