@@ -20,6 +20,8 @@ import java.util.Random;
 
 /**
  * Created by weizongwei on 15-10-27.
+ *
+ * 爆炸view
  */
 public class BangView extends View {
 
@@ -48,7 +50,6 @@ public class BangView extends View {
 
     private void init() {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mPaint.setColor(Color.BLUE);
     }
 
     @Override
@@ -74,7 +75,8 @@ public class BangView extends View {
         bottom = v.getBottom();
         right = v.getRight();
 
-        int len=width/RADIUS;
+        int len=width/RADIUS/2;
+        Log.d("XXXxxx","width:"+width+"  radius:"+RADIUS+" left:"+left);
         radomPickColors=ViewPickColorsUtil.radomPickColors(paintView,len+1);
     }
 
@@ -85,7 +87,6 @@ public class BangView extends View {
                 mPaint.setColor(point.getColor());
                 canvas.drawCircle(point.getX(), point.getY(), RADIUS, mPaint);
             }
-            Log.d("drawCircleList", "pointList size:"+pointList.length);
         }
     }
 
@@ -114,7 +115,7 @@ public class BangView extends View {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                int len=width/RADIUS;
+                int len=width/RADIUS/2;
                 pointList=new Point[len];
                 for (int i_index = 0; i_index <len; i_index ++) {
                     int color=Color.RED;
@@ -122,7 +123,7 @@ public class BangView extends View {
                     {
                         color=radomPickColors.get(i_index);
                     }
-                    createPoint(left+RADIUS*i_index, ycenter, color,i_index);
+                    createPoint(left+RADIUS*i_index*2, ycenter, color,i_index);
                 }
             }
 
@@ -194,6 +195,8 @@ public class BangView extends View {
         return new Point(x, y, p.getColor());
     }
 
+
+    //添加进页面中
     public static BangView add2RootView(Activity activity) {
 
         ViewGroup rootView = (ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT);
