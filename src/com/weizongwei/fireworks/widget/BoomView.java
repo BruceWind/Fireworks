@@ -21,9 +21,9 @@ import java.util.Random;
 /**
  * Created by weizongwei on 15-10-27.
  *
- * 爆炸view
+ * 爆炸view  这个view最低支持到android 3.0  api 11
  */
-public class BangView extends View {
+public class BoomView extends View {
 
     public static final int RADIUS = (int) (4 * Resources.getSystem().getDisplayMetrics().density + 0.5f);
 
@@ -38,12 +38,12 @@ public class BangView extends View {
     //如下几个值用于 计算颗粒的 起始，顶部，落点位置
     private int top, height, left, width, xcenter, ycenter, right, bottom;
 
-    public BangView(Context context, AttributeSet attrs) {
+    public BoomView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public BangView(Activity activity) {
+    public BoomView(Activity activity) {
         super(activity);
         init();
     }
@@ -176,7 +176,7 @@ public class BangView extends View {
             }
         });
         anim.setInterpolator(new DecelerateAccelerateInterpolator());
-        anim.setDuration(600 + ViewPickColorsUtil.getRadomInt(200));//时间后面要追加随机数
+        anim.setDuration(400 + ViewPickColorsUtil.getRadomInt(150));//时间后面要追加随机数
         anim.start();
 
     }
@@ -208,10 +208,10 @@ public class BangView extends View {
 
 
     //添加进页面中
-    public static BangView add2RootView(Activity activity) {
+    public static BoomView add2RootView(Activity activity) {
 
         ViewGroup rootView = (ViewGroup) activity.findViewById(Window.ID_ANDROID_CONTENT);
-        BangView surfview = new BangView(activity);
+        BoomView surfview = new BoomView(activity);
 
         rootView.addView(
                 surfview,

@@ -4,6 +4,7 @@ import android.animation.TimeInterpolator;
 
 /**
  * Created by weizongwei on 15-10-27.
+ * 根据时间 逐渐改变数值  并且是曲线型变化  
  */
 public class DecelerateAccelerateInterpolator implements TimeInterpolator {
 

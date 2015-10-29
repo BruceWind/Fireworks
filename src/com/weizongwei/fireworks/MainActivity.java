@@ -5,15 +5,14 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.ImageView;
-import android.widget.TextView;
-import com.weizongwei.fireworks.widget.BangView;
+import com.weizongwei.fireworks.widget.BoomView;
 
 public class MainActivity extends Activity {
     /**
      * Called when the activity is first created.
      */
 
-    BangView surface_main;
+    BoomView surface_main;
     ImageView txt_main;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -38,7 +37,7 @@ public class MainActivity extends Activity {
 
     private void startDraw()
     {
-        surface_main= BangView.add2RootView(this);
+        surface_main= BoomView.add2RootView(this);
         surface_main.setPaintView(txt_main);
         surface_main.invalidate();
         surface_main.startAnimation();
