@@ -13,7 +13,7 @@ public class MainActivity extends Activity {
      */
 
     BoomView surface_main;
-    ImageView txt_main;
+    ImageView img_pick;
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.main);
 
         initWidget();
-        txt_main.postDelayed(new Runnable() {
+        img_pick.postDelayed(new Runnable() {
             @Override
             public void run() {
                 startDraw();
@@ -32,14 +32,15 @@ public class MainActivity extends Activity {
 
     private  void initWidget()
     {
-        txt_main=(ImageView)findViewById(R.id.txt_main);
+        img_pick=(ImageView)findViewById(R.id.img_pick);
     }
 
     private void startDraw()
     {
         surface_main= BoomView.add2RootView(this);
-        surface_main.setPaintView(txt_main);
-        surface_main.invalidate();
+        surface_main.setPaintView(img_pick);
+
+        surface_main.setEnableViewShakeAnim(false);
         surface_main.startAnimation();
 
     }

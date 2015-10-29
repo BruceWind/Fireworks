@@ -34,6 +34,7 @@ public class BoomView extends View {
 
     private Paint mPaint;
     private View paintView;
+    private boolean mIsEnableShake;
 
     //如下几个值用于 计算颗粒的 起始，顶部，落点位置
     private int top, height, left, width, xcenter, ycenter, right, bottom;
@@ -49,6 +50,7 @@ public class BoomView extends View {
     }
 
     private void init() {
+        mIsEnableShake=true;
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     }
 
@@ -57,6 +59,12 @@ public class BoomView extends View {
         if (pointList != null) {
             drawCircleList(canvas);
         }
+    }
+
+    //配置是否让view执行shake动画
+    public void setEnableViewShakeAnim(boolean isEnableShake)
+    {
+        mIsEnableShake=isEnableShake;
     }
 
 
@@ -114,7 +122,7 @@ public class BoomView extends View {
 
             @Override
             public void onAnimationEnd(Animator animator) {
-                creatPointList();
+                boomPoints();
             }
 
             @Override
@@ -134,10 +142,15 @@ public class BoomView extends View {
     }
 
     public void startAnimation() {
-        shake();
+        if(mIsEnableShake) {
+            shake();
+        }
+        else {
+            boomPoints();
+        }
     }
 
-    private void creatPointList()
+    private void boomPoints()
     {
         int len=width/RADIUS/2*2;
         //len的结果  先/2，是根据颗粒的直径得出颗粒总数； 总数×2，是为了增加颗粒数。
