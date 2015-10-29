@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
         surface_main= BoomView.add2RootView(this);
         surface_main.setPaintView(img_pick);
 
-        surface_main.setEnableViewShakeAnim(false);
+        //surface_main.setEnableViewShakeAnim(false);
         surface_main.startAnimation();
 
     }

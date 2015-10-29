@@ -7,9 +7,9 @@
               android:gravity="center"
         >
     <ImageView
-            android:layout_width="180dp"
-            android:layout_height="180dp"
-            android:id="@+id/txt_main"
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:id="@+id/img_pick"
             android:src="@drawable/vanamo_logo"
             />
 

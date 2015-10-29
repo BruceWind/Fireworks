@@ -26,6 +26,7 @@ import java.util.Random;
 public class BoomView extends View {
 
     public static final int RADIUS = (int) (4 * Resources.getSystem().getDisplayMetrics().density + 0.5f);
+    private static final float A_DP= Resources.getSystem().getDisplayMetrics().density;
 
     ArrayList<Integer> radomPickColors;
     private Point[] pointList;
@@ -81,6 +82,8 @@ public class BoomView extends View {
 
         bottom = v.getBottom();
         right = v.getRight();
+
+
 
         int len=width/RADIUS/2*2;// 先/2，是根据颗粒的直径得出颗粒总数 ； 总数×2，是为了增加颗粒数。
         Log.d("XXXxxx","width:"+width+"  radius:"+RADIUS+" left:"+left);
@@ -189,7 +192,11 @@ public class BoomView extends View {
             }
         });
         anim.setInterpolator(new DecelerateAccelerateInterpolator());
-        anim.setDuration(400 + ViewPickColorsUtil.getRadomInt(150));//时间后面要追加随机数
+
+        //爆炸颗粒执行的动画的时长
+        long timems=(long)(150+height/A_DP)*2 + ViewPickColorsUtil.getRadomInt(150);
+        anim.setDuration(timems);//时间后面要追加随机数
+
         anim.start();
 
     }
@@ -197,7 +204,7 @@ public class BoomView extends View {
 
     private Point getTopPoint(Point p) {
         float x = p.getX() + (p.getX() - xcenter);
-        float y = p.getY() - upHeight;//跑到顶部的位置的高度 要有个随机数
+        float y = p.getY() - height*1f;//跑到顶部的位置的高度 要有个随机数
 
         x+= ViewPickColorsUtil.getRadomInt(width/5);
         y+= ViewPickColorsUtil.getRadomInt(height/4);
