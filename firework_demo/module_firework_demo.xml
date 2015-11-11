@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_firework_demo" default="compile.module.firework_demo">
+  <dirname property="module.firework_demo.basedir" file="${ant.file.module_firework_demo}"/>
+  
+  <property name="module.jdk.home.firework_demo" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.firework_demo" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.firework_demo" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.firework_demo" value="-encoding UTF-8 -source 1.6 ${compiler.args}"/>
+  
+  <property name="firework_demo.output.dir" value="${module.firework_demo.basedir}/build/classes/production/firework_demo"/>
+  <property name="firework_demo.testoutput.dir" value="${module.firework_demo.basedir}/build/classes/test/firework_demo"/>
+  
+  <path id="firework_demo.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="firework_demo.module.production.classpath">
+    <path refid="${module.jdk.classpath.firework_demo}"/>
+  </path>
+  
+  <path id="firework_demo.runtime.production.module.classpath">
+    <pathelement location="${firework_demo.output.dir}"/>
+  </path>
+  
+  <path id="firework_demo.module.classpath">
+    <path refid="${module.jdk.classpath.firework_demo}"/>
+    <pathelement location="${firework_demo.output.dir}"/>
+  </path>
+  
+  <path id="firework_demo.runtime.module.classpath">
+    <pathelement location="${firework_demo.testoutput.dir}"/>
+    <pathelement location="${firework_demo.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.firework_demo">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.firework_demo">
+    <patternset refid="excluded.from.module.firework_demo"/>
+  </patternset>
+  
+  
+  <target name="compile.module.firework_demo" depends="compile.module.firework_demo.production,compile.module.firework_demo.tests" description="Compile module firework_demo"/>
+  
+  <target name="compile.module.firework_demo.production" depends="register.custom.compilers" description="Compile module firework_demo; production classes"/>
+  
+  <target name="compile.module.firework_demo.tests" depends="register.custom.compilers,compile.module.firework_demo.production" description="compile module firework_demo; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.firework_demo" description="cleanup module">
+    <delete dir="${firework_demo.output.dir}"/>
+    <delete dir="${firework_demo.testoutput.dir}"/>
+  </target>
+</project>
