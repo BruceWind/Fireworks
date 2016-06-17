@@ -10,7 +10,7 @@
 找到了个好的梯子 重新使用gradle构建了。
 
 看效果
-![这里写图片描述](http://img.blog.csdn.net/20160113234723369)
+![这里写图片描述](https://github.com/weizongwei5/my_blog_datasave/blob/master/img/20160113234723369.gif)
 
 
 里面代码做到了尽量的精简。
